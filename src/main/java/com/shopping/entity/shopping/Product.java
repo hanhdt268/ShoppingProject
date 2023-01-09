@@ -9,6 +9,7 @@ import java.util.Set;
 @Entity
 public class Product {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long pId;
@@ -17,12 +18,18 @@ public class Product {
     private String price;
     private String discountPrice;
     private String images;
-
     private Boolean active = false;
-
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "product_image", joinColumns = {
+            @JoinColumn(name = "product_id")
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "image_id")
+    }
+    )
+    private Set<ImageModel> productImage;
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Oder> oders = new HashSet<>();
@@ -37,6 +44,14 @@ public class Product {
         this.price = price;
         this.discountPrice = discountPrice;
         this.images = images;
+    }
+
+    public Set<ImageModel> getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(Set<ImageModel> productImage) {
+        this.productImage = productImage;
     }
 
     public Long getpId() {

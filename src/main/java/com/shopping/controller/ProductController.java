@@ -2,13 +2,19 @@ package com.shopping.controller;
 
 
 import com.shopping.entity.shopping.Category;
+import com.shopping.entity.shopping.ImageModel;
 import com.shopping.entity.shopping.Product;
 import com.shopping.services.Impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/product")
@@ -20,16 +26,47 @@ public class ProductController {
 
 
     //create product
-    @PostMapping("/")
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
-        return ResponseEntity.ok(this.productService.addProduct(product));
+    @PostMapping(value = "/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Product> addProduct(@RequestPart("product") Product product,
+                                              @RequestPart("imageFile") MultipartFile[] file) {
+//        return ResponseEntity.ok(this.productService.addProduct(product));
+        try {
+            Set<ImageModel> imageModels = uploadImage(file);
+            product.setProductImage(imageModels);
+            return ResponseEntity.ok(this.productService.addProduct(product));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
+    public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
+        Set<ImageModel> imageModels = new HashSet<>();
+        for (MultipartFile file : multipartFiles) {
+            ImageModel imageModel = new ImageModel(
+
+                    file.getOriginalFilename(),
+                    file.getContentType(),
+                    file.getBytes()
+            );
+            imageModels.add(imageModel);
+        }
+        return imageModels;
+    }
 
     //update product
-    @PutMapping("/")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
-        return ResponseEntity.ok(this.productService.updateProduct(product));
+    @PutMapping(value = "/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Product> updateProduct(@RequestPart("product") Product product,
+                                                 @RequestPart("imageFile") MultipartFile[] file) {
+//        return ResponseEntity.ok(this.productService.updateProduct(product));
+        try {
+            Set<ImageModel> imageModels = uploadImage(file);
+            product.setProductImage(imageModels);
+            return ResponseEntity.ok(this.productService.updateProduct(product));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     //get product by id
