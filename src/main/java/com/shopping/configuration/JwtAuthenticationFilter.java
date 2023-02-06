@@ -19,9 +19,9 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    public static String USER_CURRENT = "";
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
-
     @Autowired
     private JwtUtils jwtUtils;
 
@@ -37,6 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             jwtToken = requestTokenHeader.substring(7);
             try {
                 username = this.jwtUtils.extractUsername(jwtToken);
+                USER_CURRENT = username;
             } catch (ExpiredJwtException e) {
                 e.printStackTrace();
                 System.out.println("Jwt token has expired");

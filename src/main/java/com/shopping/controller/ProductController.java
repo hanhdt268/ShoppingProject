@@ -1,9 +1,10 @@
 package com.shopping.controller;
 
 
-import com.shopping.entity.shopping.Category;
 import com.shopping.entity.shopping.ImageModel;
+import com.shopping.entity.shopping.Manufacturer;
 import com.shopping.entity.shopping.Product;
+import com.shopping.repository.ProductRepository;
 import com.shopping.services.Impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,6 +24,8 @@ public class ProductController {
 
     @Autowired
     private ProductServiceImpl productService;
+    @Autowired
+    private ProductRepository productRepository;
 
 
     //create product
@@ -32,7 +35,7 @@ public class ProductController {
 //        return ResponseEntity.ok(this.productService.addProduct(product));
         try {
             Set<ImageModel> imageModels = uploadImage(file);
-            product.setProductImage(imageModels);
+            product.setProductImages(imageModels);
             return ResponseEntity.ok(this.productService.addProduct(product));
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -61,7 +64,7 @@ public class ProductController {
 //        return ResponseEntity.ok(this.productService.updateProduct(product));
         try {
             Set<ImageModel> imageModels = uploadImage(file);
-            product.setProductImage(imageModels);
+            product.setProductImages(imageModels);
             return ResponseEntity.ok(this.productService.updateProduct(product));
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -88,10 +91,30 @@ public class ProductController {
     }
 
     //get category by product
-    @GetMapping("/category/{cId}")
-    public List<Product> getProductOfCategory(@PathVariable("cId") Long cId) {
-        Category category = new Category();
-        category.setcId(cId);
-        return this.productService.getProductOfCategory(category);
+    @GetMapping("/manufacturer/{mId}")
+    public List<Product> getProductOfCategory(@PathVariable("mId") Long mId) {
+        Manufacturer manufacturer = new Manufacturer();
+        manufacturer.setmId(mId);
+        return this.productService.getProductOfCategory(manufacturer);
+    }
+
+    //get active product
+    @GetMapping("/active")
+    public List<Product> getActiveProduct() {
+        return this.productService.getActiveProduct();
+    }
+
+    //get active product of manufacturer
+    @GetMapping("/manufacturer/active/{mId}")
+    public List<Product> getActiveProduct(@PathVariable("mId") Long mId) {
+        Manufacturer manufacturer = new Manufacturer();
+        manufacturer.setmId(mId);
+        return this.productService.getActiveProductOfManu(manufacturer);
+    }
+
+    @GetMapping("/{isSingleProductCheckOut}/{pId}")
+    public List<Product> getProductDetails(@PathVariable(name = "isSingleProductCheckOut") boolean isSingleProductCheckOut,
+                                           @PathVariable(name = "pId") Long pId) {
+        return productService.getProductDetail(isSingleProductCheckOut, pId);
     }
 }

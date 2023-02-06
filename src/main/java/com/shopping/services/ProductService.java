@@ -1,6 +1,6 @@
 package com.shopping.services;
 
-import com.shopping.entity.shopping.Category;
+import com.shopping.entity.shopping.Manufacturer;
 import com.shopping.entity.shopping.Product;
 
 import java.util.List;
@@ -18,5 +18,11 @@ public interface ProductService {
 
     public void deleteProduct(Long pId);
 
-    public List<Product> getProductOfCategory(Category category);
+    public List<Product> getProductOfCategory(Manufacturer Manufacturer);
+
+    List<Product> getActiveProduct();
+
+    List<Product> getActiveProductOfManu(Manufacturer c);
+
+//    List<Product> getProductDetail(boolean isSingleProductCheckOut, Long pId);
 }

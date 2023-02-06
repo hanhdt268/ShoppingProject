@@ -1,7 +1,6 @@
 package com.shopping.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.shopping.entity.shopping.Oder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -27,10 +26,6 @@ public class User implements UserDetails {
     @JsonIgnore
     private Set<UserRole> userRoles = new HashSet<>();
 
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Oder> oders = new HashSet<>();
 
     public User() {
     }
@@ -142,11 +137,4 @@ public class User implements UserDetails {
         this.userRoles = userRoles;
     }
 
-    public Set<Oder> getOders() {
-        return oders;
-    }
-
-    public void setOders(Set<Oder> oders) {
-        this.oders = oders;
-    }
 }

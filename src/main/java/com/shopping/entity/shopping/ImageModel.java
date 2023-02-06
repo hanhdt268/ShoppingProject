@@ -12,7 +12,7 @@ public class ImageModel {
     private String name;
     private String type;
 
-    @Column(length = 5000000)
+    @Column(length = 50000000)
     private byte[] pcyByte;
 
 
@@ -32,6 +32,7 @@ public class ImageModel {
     public void setId(Long id) {
         this.id = id;
     }
+
 
     public String getName() {
         return name;

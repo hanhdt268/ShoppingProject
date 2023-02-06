@@ -1,11 +1,15 @@
 package com.shopping.repository;
 
-import com.shopping.entity.shopping.Category;
+import com.shopping.entity.shopping.Manufacturer;
 import com.shopping.entity.shopping.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    List<Product> findByCategory(Category category);
+    List<Product> findByManufacturer(Manufacturer manufacturer);
+
+    public List<Product> findByActive(Boolean b);
+
+    public List<Product> findByManufacturerAndActive(Manufacturer c, Boolean b);
 }

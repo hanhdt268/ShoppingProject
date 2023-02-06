@@ -1,11 +1,9 @@
 package com.shopping.entity.shopping;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jdk.jfr.Enabled;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -18,10 +16,11 @@ public class Category {
     private String title;
     private String description;
 
-
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
-    private Set<Product> products = new LinkedHashSet<>();
+    private Set<Manufacturer> manufacturers = new HashSet<>();
+
+
     public Category() {
     }
 
@@ -29,6 +28,14 @@ public class Category {
         this.cId = cId;
         this.title = title;
         this.description = description;
+    }
+
+    public Set<Manufacturer> getManufacturers() {
+        return manufacturers;
+    }
+
+    public void setManufacturers(Set<Manufacturer> manufacturers) {
+        this.manufacturers = manufacturers;
     }
 
     public Long getcId() {
