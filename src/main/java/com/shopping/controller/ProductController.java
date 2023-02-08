@@ -80,8 +80,8 @@ public class ProductController {
 
     //getAll
     @GetMapping("/")
-    public ResponseEntity<?> getProduct() {
-        return ResponseEntity.ok(this.productService.getProducts());
+    public ResponseEntity<?> getProduct(@RequestParam(defaultValue = "0") int pageNumber) {
+        return ResponseEntity.ok(this.productService.getProducts(pageNumber));
     }
 
     //delete

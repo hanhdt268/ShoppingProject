@@ -5,12 +5,12 @@ import com.shopping.entity.shopping.Product;
 import com.shopping.repository.ProductRepository;
 import com.shopping.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -33,9 +33,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Set<Product> getProducts() {
-        return new HashSet<>(this.productRepository.findAll());
-    }
+    public List<Product> getProducts(int pageNumber) {
+//        Pageable pageable = PageRequest.of(0, 1);
+        Pageable pageable = PageRequest.of(pageNumber, 3);
+        return this.productRepository.findAll(pageable);
+    }g
 
     @Override
     public void deleteProduct(Long pId) {

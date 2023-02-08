@@ -4,7 +4,6 @@ import com.shopping.entity.shopping.Manufacturer;
 import com.shopping.entity.shopping.Product;
 
 import java.util.List;
-import java.util.Set;
 
 public interface ProductService {
 
@@ -14,7 +13,7 @@ public interface ProductService {
 
     public Product getProductById(Long pId);
 
-    public Set<Product> getProducts();
+    public List<Product> getProducts(int pageNumber);
 
     public void deleteProduct(Long pId);
 

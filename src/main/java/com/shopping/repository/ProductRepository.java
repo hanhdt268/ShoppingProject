@@ -2,12 +2,17 @@ package com.shopping.repository;
 
 import com.shopping.entity.shopping.Manufacturer;
 import com.shopping.entity.shopping.Product;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+@Repository
+public interface ProductRepository extends CrudRepository<Product, Long> {
     List<Product> findByManufacturer(Manufacturer manufacturer);
+
+    public List<Product> findAll(Pageable pageable);
 
     public List<Product> findByActive(Boolean b);
 
