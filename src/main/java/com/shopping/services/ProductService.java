@@ -13,7 +13,7 @@ public interface ProductService {
 
     public Product getProductById(Long pId);
 
-    public List<Product> getProducts(int pageNumber);
+    public List<Product> getProducts(int pageNumber, String searchKey);
 
     public void deleteProduct(Long pId);
 

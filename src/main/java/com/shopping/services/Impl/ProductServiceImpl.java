@@ -33,11 +33,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts(int pageNumber) {
+    public List<Product> getProducts(int pageNumber, String searchKey) {
 //        Pageable pageable = PageRequest.of(0, 1);
         Pageable pageable = PageRequest.of(pageNumber, 3);
-        return this.productRepository.findAll(pageable);
-    }g
+
+        if (searchKey.equals("")) {
+            return (List<Product>) this.productRepository.findAll(pageable);
+        } else {
+            return (List<Product>) this.productRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+                    searchKey, searchKey, pageable
+            );
+        }
+    }
 
     @Override
     public void deleteProduct(Long pId) {
