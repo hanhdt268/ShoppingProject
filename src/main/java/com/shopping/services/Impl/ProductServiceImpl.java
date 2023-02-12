@@ -1,8 +1,13 @@
 package com.shopping.services.Impl;
 
-import com.shopping.entity.shopping.Manufacturer;
+import com.shopping.configuration.JwtAuthenticationFilter;
+import com.shopping.entity.User;
+import com.shopping.entity.shopping.Cart;
+import com.shopping.entity.shopping.Category;
 import com.shopping.entity.shopping.Product;
+import com.shopping.repository.CartRepository;
 import com.shopping.repository.ProductRepository;
+import com.shopping.repository.UserRepository;
 import com.shopping.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -11,11 +16,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private CartRepository cartRepository;
 
     @Override
     public Product addProduct(Product product) {
@@ -52,8 +64,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductOfCategory(Manufacturer Manufacturer) {
-        return this.productRepository.findByManufacturer(Manufacturer);
+    public List<Product> getProductOfCategory(Category category) {
+        return this.productRepository.findByCategory(category);
     }
 
     @Override
@@ -62,19 +74,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getActiveProductOfManu(Manufacturer c) {
-        return this.productRepository.findByManufacturerAndActive(c, true);
+    public List<Product> getActiveProductOfCategory(Category c) {
+        return this.productRepository.findByCategoryAndActive(c, true);
     }
 
     public List<Product> getProductDetail(boolean isSingleProductCheckOut, Long pId) {
-        if (isSingleProductCheckOut) {
+        if (isSingleProductCheckOut && pId != 0) {
+            //we are going to buy a single product
             List<Product> list = new ArrayList<>();
             Product product = productRepository.findById(pId).get();
             list.add(product);
             return list;
         } else {
             //we are going to checkout entire cart
+            String username = JwtAuthenticationFilter.USER_CURRENT;
+            User user = userRepository.findByUsername(username);
+            List<Cart> carts = cartRepository.findByUser(user);
+            return carts.stream().map(Cart::getProduct).collect((Collectors.toList()));
         }
-        return new ArrayList<>();
     }
 }

@@ -14,8 +14,8 @@ public class OderDetailController {
     @Autowired
     private OderDetailService oderDetailService;
 
-    @PostMapping("/")
-    public void placeOder(@RequestBody OderInput oderInput) {
-        oderDetailService.placeOder(oderInput);
+    @PostMapping("/{isCartCheckout}")
+    public void placeOder(@PathVariable(name = "isCartCheckout") boolean isCartCheckout, @RequestBody OderInput oderInput) {
+        oderDetailService.placeOder(oderInput, isCartCheckout);
     }
 }

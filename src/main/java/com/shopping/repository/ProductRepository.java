@@ -1,6 +1,6 @@
 package com.shopping.repository;
 
-import com.shopping.entity.shopping.Manufacturer;
+import com.shopping.entity.shopping.Category;
 import com.shopping.entity.shopping.Product;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
-    List<Product> findByManufacturer(Manufacturer manufacturer);
+    List<Product> findByCategory(Category category);
 
     public List<Product> findAll(Pageable pageable);
 
@@ -20,5 +20,5 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     public List<Product> findByActive(Boolean b);
 
-    public List<Product> findByManufacturerAndActive(Manufacturer c, Boolean b);
+    public List<Product> findByCategoryAndActive(Category c, Boolean b);
 }

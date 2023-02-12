@@ -18,7 +18,7 @@ public class Category {
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
-    private Set<Manufacturer> manufacturers = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 
 
     public Category() {
@@ -30,12 +30,12 @@ public class Category {
         this.description = description;
     }
 
-    public Set<Manufacturer> getManufacturers() {
-        return manufacturers;
+    public Set<Product> getProducts() {
+        return products;
     }
 
-    public void setManufacturers(Set<Manufacturer> manufacturers) {
-        this.manufacturers = manufacturers;
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 
     public Long getcId() {

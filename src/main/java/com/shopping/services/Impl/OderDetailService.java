@@ -3,10 +3,8 @@ package com.shopping.services.Impl;
 
 import com.shopping.configuration.JwtAuthenticationFilter;
 import com.shopping.entity.User;
-import com.shopping.entity.shopping.OderDetail;
-import com.shopping.entity.shopping.OderInput;
-import com.shopping.entity.shopping.OderProductQuantity;
-import com.shopping.entity.shopping.Product;
+import com.shopping.entity.shopping.*;
+import com.shopping.repository.CartRepository;
 import com.shopping.repository.OderDetailRepository;
 import com.shopping.repository.ProductRepository;
 import com.shopping.repository.UserRepository;
@@ -28,8 +26,10 @@ public class OderDetailService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CartRepository cartRepository;
 
-    public void placeOder(OderInput oderInput) {
+    public void placeOder(OderInput oderInput, boolean isCartCheckout) {
         List<OderProductQuantity> productQuantityList = oderInput.getOderProductQuantityList();
         for (OderProductQuantity o : productQuantityList) {
             Product product = this.productRepository.findById(o.getpId()).get();
@@ -46,7 +46,16 @@ public class OderDetailService {
                     product,
                     user
             );
+
+            //empty the cart
+            if (!isCartCheckout) {
+                List<Cart> carts = cartRepository.findByUser(user);
+                carts.stream().forEach(x -> cartRepository.deleteById(x.getCartId()));
+            }
+
             this.oderDetailRepository.save(oderDetail);
         }
+
+
     }
 }

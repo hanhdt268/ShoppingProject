@@ -1,8 +1,8 @@
 package com.shopping.controller;
 
 
+import com.shopping.entity.shopping.Category;
 import com.shopping.entity.shopping.ImageModel;
-import com.shopping.entity.shopping.Manufacturer;
 import com.shopping.entity.shopping.Product;
 import com.shopping.repository.ProductRepository;
 import com.shopping.services.Impl.ProductServiceImpl;
@@ -92,11 +92,11 @@ public class ProductController {
     }
 
     //get category by product
-    @GetMapping("/manufacturer/{mId}")
-    public List<Product> getProductOfCategory(@PathVariable("mId") Long mId) {
-        Manufacturer manufacturer = new Manufacturer();
-        manufacturer.setmId(mId);
-        return this.productService.getProductOfCategory(manufacturer);
+    @GetMapping("/category/{cId}")
+    public List<Product> getProductOfCategory(@PathVariable("cId") Long cId) {
+        Category category = new Category();
+        category.setcId(cId);
+        return this.productService.getProductOfCategory(category);
     }
 
     //get active product
@@ -106,11 +106,11 @@ public class ProductController {
     }
 
     //get active product of manufacturer
-    @GetMapping("/manufacturer/active/{mId}")
-    public List<Product> getActiveProduct(@PathVariable("mId") Long mId) {
-        Manufacturer manufacturer = new Manufacturer();
-        manufacturer.setmId(mId);
-        return this.productService.getActiveProductOfManu(manufacturer);
+    @GetMapping("/category/active/{cId}")
+    public List<Product> getActiveProduct(@PathVariable("cId") Long cId) {
+        Category category = new Category();
+        category.setcId(cId);
+        return this.productService.getActiveProductOfCategory(category);
     }
 
     @GetMapping("/{isSingleProductCheckOut}/{pId}")

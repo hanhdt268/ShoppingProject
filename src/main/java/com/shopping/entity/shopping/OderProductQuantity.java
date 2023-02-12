@@ -5,6 +5,10 @@ public class OderProductQuantity {
     private Long pId;
     private Integer quantity;
 
+
+    public OderProductQuantity() {
+    }
+
     public Long getpId() {
         return pId;
     }

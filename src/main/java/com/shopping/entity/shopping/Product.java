@@ -17,7 +17,7 @@ public class Product {
     private String images;
     private Boolean active = false;
     @ManyToOne(fetch = FetchType.EAGER)
-    private Manufacturer manufacturer;
+    private Category category;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -50,6 +50,14 @@ public class Product {
 
     public void setProductDetails(ProductDetails productDetails) {
         this.productDetails = productDetails;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Set<ImageModel> getProductImages() {
@@ -108,13 +116,6 @@ public class Product {
         this.images = images;
     }
 
-    public Manufacturer getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(Manufacturer manufacturer) {
-        this.manufacturer = manufacturer;
-    }
 
     public Boolean getActive() {
         return active;
