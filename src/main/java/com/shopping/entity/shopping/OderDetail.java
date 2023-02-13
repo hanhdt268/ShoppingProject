@@ -27,6 +27,9 @@ public class OderDetail {
     @OneToOne
     private User user;
 
+    public OderDetail() {
+    }
+
     public OderDetail(String oderFullName, String oderFullOder, String oderContactNumber, String oderAlternateContact, String oderStatus, Double oderAmount, Product product, User user) {
         this.oderFullName = oderFullName;
         this.oderFullOder = oderFullOder;

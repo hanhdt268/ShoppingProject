@@ -9,4 +9,6 @@ public interface CartService {
     public Cart addToCart(Long pId);
 
     public List<Cart> getCartDetails();
+
+    public void delete(Long cartId);
 }

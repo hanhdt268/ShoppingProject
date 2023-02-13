@@ -29,6 +29,35 @@ public class OderDetailService {
     @Autowired
     private CartRepository cartRepository;
 
+    public List<OderDetail> getOderDetails() {
+        String username = JwtAuthenticationFilter.USER_CURRENT;
+        User user = userRepository.findByUsername(username);
+        return oderDetailRepository.findByUser(user);
+    }
+
+
+    public List<OderDetail> getAllOrderDetails() {
+        return oderDetailRepository.findAll();
+    }
+
+    public void markOrderAsDelivered(Long oderId) {
+        OderDetail oderDetail = oderDetailRepository.findById(oderId).get();
+
+        if (oderDetail != null) {
+            oderDetail.setOderStatus("Delivered");
+            oderDetailRepository.save(oderDetail);
+        }
+    }
+
+    public void markOrderAsDestroy(Long oderId) {
+        OderDetail oderDetail = oderDetailRepository.findById(oderId).get();
+
+        if (oderDetail != null) {
+            oderDetail.setOderStatus("Cancel");
+            oderDetailRepository.save(oderDetail);
+        }
+    }
+
     public void placeOder(OderInput oderInput, boolean isCartCheckout) {
         List<OderProductQuantity> productQuantityList = oderInput.getOderProductQuantityList();
         for (OderProductQuantity o : productQuantityList) {
