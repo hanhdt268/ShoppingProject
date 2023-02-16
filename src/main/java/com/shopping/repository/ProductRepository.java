@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
-    List<Product> findByCategory(Category category);
+    List<Product> findByCategory(Category category, Pageable pageable);
 
     public List<Product> findAll(Pageable pageable);
 
@@ -18,7 +18,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
             String searchKey1, String searchKey2, Pageable pageable
     );
 
-    public List<Product> findByActive(Boolean b);
+    public List<Product> findByActive(Boolean b, Pageable pageable);
 
-    public List<Product> findByCategoryAndActive(Category c, Boolean b);
+    public List<Product> findByCategoryAndActive(Category c, Boolean b, Pageable pageable);
 }

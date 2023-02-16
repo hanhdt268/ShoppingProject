@@ -93,24 +93,29 @@ public class ProductController {
 
     //get category by product
     @GetMapping("/category/{cId}")
-    public List<Product> getProductOfCategory(@PathVariable("cId") Long cId) {
+    public List<Product> getProductOfCategory(@RequestParam(defaultValue = "0") int pageNumber,
+                                              @RequestParam(defaultValue = "") String searchKey,
+                                              @PathVariable("cId") Long cId) {
         Category category = new Category();
         category.setcId(cId);
-        return this.productService.getProductOfCategory(category);
+        return this.productService.getProductOfCategory(category, pageNumber, searchKey);
     }
 
     //get active product
     @GetMapping("/active")
-    public List<Product> getActiveProduct() {
-        return this.productService.getActiveProduct();
+    public List<Product> getActiveProduct(@RequestParam(defaultValue = "0") int pageNumber,
+                                          @RequestParam(defaultValue = "") String searchKey) {
+        return this.productService.getActiveProduct(pageNumber, searchKey);
     }
 
     //get active product of manufacturer
     @GetMapping("/category/active/{cId}")
-    public List<Product> getActiveProduct(@PathVariable("cId") Long cId) {
+    public List<Product> getActiveProduct(@RequestParam(defaultValue = "0") int pageNumber,
+                                          @RequestParam(defaultValue = "") String searchKey,
+                                          @PathVariable("cId") Long cId) {
         Category category = new Category();
         category.setcId(cId);
-        return this.productService.getActiveProductOfCategory(category);
+        return this.productService.getActiveProductOfCategory(category, pageNumber, searchKey);
     }
 
     @GetMapping("/{isSingleProductCheckOut}/{pId}")

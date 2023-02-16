@@ -17,11 +17,11 @@ public interface ProductService {
 
     public void deleteProduct(Long pId);
 
-    public List<Product> getProductOfCategory(Category category);
+    public List<Product> getProductOfCategory(Category category, int pageNumber, String searchKey);
 
-    List<Product> getActiveProduct();
+    List<Product> getActiveProduct(int pageNumber, String searchKey);
 
-    List<Product> getActiveProductOfCategory(Category c);
+    List<Product> getActiveProductOfCategory(Category c, int pageNumber, String searchKey);
 
 //    List<Product> getProductDetail(boolean isSingleProductCheckOut, Long pId);
 }

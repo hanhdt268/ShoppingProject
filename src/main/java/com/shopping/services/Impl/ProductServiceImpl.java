@@ -64,18 +64,48 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductOfCategory(Category category) {
-        return this.productRepository.findByCategory(category);
+    public List<Product> getProductOfCategory(Category category, int pageNumber, String searchKey) {
+        Pageable pageable = PageRequest.of(pageNumber, 3);
+
+//        return this.productRepository.findByCategory(category, pageable);
+        if (searchKey.equals("")) {
+            return (List<Product>) this.productRepository.findByCategory(category, pageable);
+        } else {
+            return (List<Product>) this.productRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+                    searchKey, searchKey, pageable
+            );
+        }
+//        return this.productRepository.findByCategory(category);
     }
 
     @Override
-    public List<Product> getActiveProduct() {
-        return this.productRepository.findByActive(true);
+    public List<Product> getActiveProduct(int pageNumber, String searchKey) {
+        Pageable pageable = PageRequest.of(pageNumber, 3);
+
+        if (searchKey.equals("")) {
+//            return (List<Product>) this.productRepository.findAll(pageable);
+            return this.productRepository.findByActive(true, pageable);
+
+        } else {
+            return (List<Product>) this.productRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+                    searchKey, searchKey, pageable
+            );
+        }
     }
 
     @Override
-    public List<Product> getActiveProductOfCategory(Category c) {
-        return this.productRepository.findByCategoryAndActive(c, true);
+    public List<Product> getActiveProductOfCategory(Category c, int pageNumber, String searchKey) {
+//        return this.productRepository.findByCategoryAndActive(c, true);
+        Pageable pageable = PageRequest.of(pageNumber, 3);
+
+//        return this.productRepository.findByCategory(category, pageable);
+        if (searchKey.equals("")) {
+            return (List<Product>) this.productRepository.findByCategoryAndActive(c, true, pageable);
+        } else {
+            return (List<Product>) this.productRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+                    searchKey, searchKey, pageable
+            );
+        }
     }
 
     public List<Product> getProductDetail(boolean isSingleProductCheckOut, Long pId) {
