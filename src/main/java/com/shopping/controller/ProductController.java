@@ -108,7 +108,7 @@ public class ProductController {
         return this.productService.getActiveProduct(pageNumber, searchKey);
     }
 
-    //get active product of manufacturer
+    //get active product of category
     @GetMapping("/category/active/{cId}")
     public List<Product> getActiveProduct(@RequestParam(defaultValue = "0") int pageNumber,
                                           @RequestParam(defaultValue = "") String searchKey,

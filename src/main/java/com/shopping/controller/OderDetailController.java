@@ -22,14 +22,14 @@ public class OderDetailController {
         oderDetailService.placeOder(oderInput, isCartCheckout);
     }
 
-    @GetMapping("/")
-    public List<OderDetail> getOderDetails() {
-        return this.oderDetailService.getOderDetails();
+    @GetMapping("/{status}")
+    public List<OderDetail> getOderDetails(@PathVariable("status") String status) {
+        return this.oderDetailService.getOderDetails(status);
     }
 
-    @GetMapping("/getAllOrderDetails")
-    public List<OderDetail> getAllOrderDetails() {
-        return this.oderDetailService.getAllOrderDetails();
+    @GetMapping("/getAllOrderDetails/{status}")
+    public List<OderDetail> getAllOrderDetails(@PathVariable("status") String status) {
+        return this.oderDetailService.getAllOrderDetails(status);
     }
 
     //delivery

@@ -5,6 +5,7 @@ import com.shopping.entity.User;
 import com.shopping.entity.UserRole;
 import com.shopping.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,13 @@ public class UserController {
     //update username
     @PutMapping("/")
     public ResponseEntity<User> updateUser(@RequestBody User user) {
-        return ResponseEntity.ok(this.userService.updateUser(user));
+        User u = this.userService.getUserById(user.getId());
+        if (u == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(u);
+        } else {
+            user.setUserRoles(u.getUserRoles());
+            return ResponseEntity.ok(this.userService.updateUser(user));
+        }
     }
 
     //delete by id

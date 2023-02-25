@@ -12,4 +12,6 @@ import java.util.List;
 public interface OderDetailRepository extends JpaRepository<OderDetail, Long> {
 
     List<OderDetail> findByUser(User user);
+
+    List<OderDetail> findOderByOderStatus(String status);
 }

@@ -38,9 +38,9 @@ public class CartServiceImpl implements CartService {
         }
 
         List<Cart> cartList = cartRepository.findByUser(user);
-        List<Cart> filterList = cartList.stream().filter(x -> x.getProduct().getpId() == pId).collect(Collectors.toList());
+        List<Cart> filterCart = cartList.stream().filter(x -> x.getProduct().getpId() == pId).collect(Collectors.toList());
 
-        if (filterList.size() > 0) {
+        if (filterCart.size() > 0) {
             return null;
         }
 

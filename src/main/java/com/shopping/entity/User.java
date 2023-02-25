@@ -1,6 +1,8 @@
 package com.shopping.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.shopping.configuration.CustomAuthorityDeserializer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -89,6 +91,7 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonDeserialize(using = CustomAuthorityDeserializer.class)
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Authority> authorities = new HashSet<>();
         this.userRoles.forEach(userRole -> {

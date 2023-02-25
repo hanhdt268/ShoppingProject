@@ -29,15 +29,23 @@ public class OderDetailService {
     @Autowired
     private CartRepository cartRepository;
 
-    public List<OderDetail> getOderDetails() {
+    public List<OderDetail> getOderDetails(String status) {
         String username = JwtAuthenticationFilter.USER_CURRENT;
         User user = userRepository.findByUsername(username);
-        return oderDetailRepository.findByUser(user);
+        if (status.equals("All")) {
+            return oderDetailRepository.findByUser(user);
+        } else {
+            return oderDetailRepository.findOderByOderStatus(status);
+        }
     }
 
 
-    public List<OderDetail> getAllOrderDetails() {
-        return oderDetailRepository.findAll();
+    public List<OderDetail> getAllOrderDetails(String status) {
+        if (status.equals("All")) {
+            return oderDetailRepository.findAll();
+        } else {
+            return oderDetailRepository.findOderByOderStatus(status);
+        }
     }
 
     public void markOrderAsDelivered(Long oderId) {
